@@ -1,0 +1,63 @@
+﻿<Window x:Class="VNmanager.GetTitle"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VNmanager"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="#272537"
+        BorderBrush="#d0d0d0"
+        BorderThickness="1"
+        WindowStartupLocation="CenterScreen"
+        Title="GetTitle" Height="150" Width="300">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome
+            CaptionHeight="25"
+            CornerRadius="0"
+            GlassFrameThickness="0"
+            />
+    </WindowChrome.WindowChrome>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+
+            <TextBlock Text="Enter new game name:"
+                   Style="{StaticResource GameTitleText}"
+                   Foreground="White"
+                   FontSize="18"
+                   Margin="5,10,0,0"/>
+
+            <TextBox x:Name="input"
+                 Height="25"
+                 Width="200"
+                 AutoWordSelection="True"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 Margin="5,50,0,0"/>
+            
+            <Button Style="{StaticResource SubmitButton}"
+                Margin="0,55,0,0"
+                IsDefault="True"
+                Click="Button_Click"
+                Width="90"
+                Height="30"/>
+        
+        </Grid>
+
+        <StackPanel Grid.Column="1">
+            <Button Style="{StaticResource CloseButton}"
+                    Height="30"
+                    Width="30"
+                    Margin="5"/>
+        </StackPanel>
+
+    </Grid>
+</Window>

@@ -1,0 +1,222 @@
+﻿<UserControl x:Class="VNmanager.GameProfile2"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VNmanager"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="1040">
+
+    <Grid Margin="10,30,10,10">
+
+        <Grid.Background>
+            <SolidColorBrush Color="#272537" Opacity="0.6"/>
+        </Grid.Background>
+
+        <Grid Margin="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="6*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0"
+                      Width="300"
+                      Height="450">
+
+                    <Grid.Background>
+                        <SolidColorBrush Color="#272537" Opacity="0.5"/>
+                    </Grid.Background>
+
+                    <Grid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Change Title Image" Command="{Binding ChangeGameData}" CommandParameter="TitleImage"/>
+                            <MenuItem Header="Delete Title Image" Command="{Binding DeleteGameImages}" CommandParameter="TitleImage"/>
+                        </ContextMenu>
+                    </Grid.ContextMenu>
+
+                    <!-- Title image -->
+                    <Canvas Width="300"
+                            Height="450">
+
+                        <Canvas.Background>
+                            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding TitleUrl}">
+                                <ImageBrush.Transform>
+                                    <TransformGroup>
+                                        <TranslateTransform X="{Binding XT}" Y="{Binding XT}"/>
+                                        <ScaleTransform ScaleX="{Binding WidthT}" ScaleY="{Binding HeightT}"/>
+                                    </TransformGroup>
+                                </ImageBrush.Transform>
+                            </ImageBrush>
+                        </Canvas.Background>
+
+                    </Canvas>
+
+                </Grid>
+
+                <!-- Left Column -->
+                <!-- Title image, stats and pay button -->
+                <Grid Grid.Row="1"
+                      Width="300">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="30*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="200*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Last played -->
+                    <TextBlock Grid.Row="0"
+                               Style="{StaticResource GameTitleText}"
+                               VerticalAlignment="Bottom"
+                               Text="{Binding LastPlayDisplay}">
+
+                    </TextBlock>
+
+                    <Rectangle Grid.Row="1"
+                               Fill="AliceBlue"
+                               Opacity="0.5"/>
+
+                    <!-- Gaming Time -->
+                    <TextBlock Grid.Row="2"
+                               Style="{StaticResource GameTitleText}"
+                               VerticalAlignment="Bottom"
+                               Text="{Binding TimePlayed}">
+                    </TextBlock>
+
+                    <Rectangle Grid.Row="3"
+                               Fill="AliceBlue"
+                               Opacity="0.5"/>
+
+                    <!-- Play Button -->
+                    <TextBlock Grid.Row="4"
+                               VerticalAlignment="Center">
+                        
+                        <Button Style="{StaticResource PlayButton}"
+                                Command="{Binding PlayGame}"
+                                Margin="35,0,0,0"
+                                Width="200"
+                                Height="60"/>
+                    </TextBlock>
+
+                </Grid>
+
+            </Grid>
+
+            <!-- Right Column -->
+            <Grid Grid.Column="1">
+
+                <StackPanel>
+
+                    <!-- Page Image Panel -->
+                    <StackPanel Width="675"
+                                Height="225"
+                                Orientation="Horizontal">
+
+                        <StackPanel.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Change Background Image" Command="{Binding ChangeGameData}" CommandParameter="PageImage"/>
+                                <MenuItem Header="Delete Background Image" Command="{Binding DeleteGameImages}" CommandParameter="PageImage"/>
+                                <MenuItem Header="Change Game Title" Command="{Binding ChangeGameTitle}" CommandParameter="Title"/>
+                            </ContextMenu>
+                        </StackPanel.ContextMenu>
+
+                        <StackPanel.Background>
+                            <SolidColorBrush Color="#272537" Opacity="0.5"/>
+                        </StackPanel.Background>
+
+                        <Canvas Width="675"
+                                Height="225">
+
+                            <Canvas.Background>
+                                <ImageBrush Stretch="Fill" ImageSource="{Binding PageUrl}">
+                                    <ImageBrush.Transform>
+                                        <TransformGroup>
+
+                                            <TranslateTransform X="{Binding XP}" Y="{Binding YP}"/>
+
+                                            <ScaleTransform ScaleX="{Binding WidthP}" ScaleY="{Binding HeightP}"/>
+
+                                        </TransformGroup>
+                                    </ImageBrush.Transform>
+                                </ImageBrush>
+                            </Canvas.Background>
+
+                            <!-- Game Title -->
+                            <TextBlock VerticalAlignment="Bottom"
+                                   Style="{StaticResource GameTitleText}"
+                                   FontSize="30"
+                                   Margin="10,180,0,0"
+                                   Text="{Binding gameTitle}">
+
+                                <TextBlock.Background>
+                                    <SolidColorBrush Color="#272537" Opacity="0.6"/>
+                                </TextBlock.Background>
+                                
+                            </TextBlock>
+
+                        </Canvas>
+
+                    </StackPanel>
+
+                    <Rectangle Fill="AliceBlue"
+                               Opacity="0.5"
+                               Height="1"/>
+
+
+                    <!-- Buttons -->
+                    <StackPanel Orientation="Horizontal"
+                                Height="100"
+                                Margin="0,20,0,0">
+
+                        <!-- Make shortcut -->
+                        <Button Style="{StaticResource ShortButton}"
+                                Command="{Binding MakeGameShortcut}"
+                                Height="80"
+                                Width="150"
+                                Margin="10,0,0,0"/>
+
+                        <!-- View viles -->
+                        <Button Style="{StaticResource ViewFileButton}"
+                                Command="{Binding ViewGameFiles}"
+                                Height="80"
+                                Width="150"
+                                Margin="10,0,10,0"/>
+
+                        <!-- Uninstall -->
+                        <Button Style="{StaticResource UninstallButton}"
+                                Command="{Binding DeleteGameData}"
+                                Height="80"
+                                Width="150"/>
+
+                        <!-- Hide -->
+                        <Button Style="{StaticResource HideButton}"
+                                Click="Button_Click"
+                                Height="80"
+                                Width="150"
+                                Margin="10,0,10,0"/>
+
+
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal"
+                                Height="100"
+                                Margin="0,20,0,0">
+                    </StackPanel>
+
+                </StackPanel>
+
+            </Grid>
+
+        </Grid>
+
+    </Grid>
+</UserControl>
