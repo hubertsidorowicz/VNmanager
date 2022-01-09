@@ -34,7 +34,8 @@ namespace VNmanager
         {
 
             #region File Dialog
-            
+
+            pickedGame = null;
             OpenFileDialog fileDialog = new OpenFileDialog();
             if (fileDialog.ShowDialog() == true) {
                 pickedGame = fileDialog.FileName;
@@ -44,12 +45,16 @@ namespace VNmanager
 
             #region Call Add Game Command
 
-            MainViewModel mvvm = App.Mvvm;
+            if (pickedGame != null)
+            {
+                MainViewModel mvvm = App.Mvvm;
 
-            mvvm.title = GetGameTitle(pickedGame);
-            mvvm.gameUrl = pickedGame;
+                mvvm.title = GetGameTitle(pickedGame);
+                mvvm.gameUrl = pickedGame;
 
-            mvvm.AddGameCommand.Execute(pickedGame);
+                mvvm.AddGameCommand.Execute(pickedGame);
+            }
+
             #endregion
         }
         string GetGameTitle(string url)

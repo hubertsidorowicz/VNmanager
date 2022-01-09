@@ -77,15 +77,12 @@ namespace VNmanager
         /// </summary>
         
         public RelayCommand<string> ChangeView { get { return new RelayCommand<string>(Change); } }
-        public RelayCommand MoveBack { get { return new RelayCommand(Back); } }
-        public RelayCommand MoveForward { get { return new RelayCommand(Forward); } }
         #endregion
 
         #region Constructor
 
         public NavigationViewModel()
         {
-            //ChangeView = new RelayCommand<string>(Change);
             // Add available pages and set page
 
             Mvvm.gameOnDisplay = "Collection";
@@ -103,6 +100,10 @@ namespace VNmanager
 
         #region Command Methods
 
+        /// <summary>
+        /// Chenging view. All view changing happens here!
+        /// </summary>
+        /// <param name="target"></param>
         public void Change(string target)
         {
             Console.WriteLine(target);
@@ -121,7 +122,7 @@ namespace VNmanager
                     PageHistoryIndex--;
                     Mvvm.ChangeColor.Execute(Mvvm.gameOnDisplay);
                     if (Mvvm.gameOnDisplay != "Collection")
-                        Mvvm.SetProfileData();
+                        Mvvm.SetProfileData(null);
                     
                     if (Mvvm.gameOnDisplay == "Collection")
                         Mvvm.CurrentPageViewModel = PageViewModels[0];
@@ -143,7 +144,7 @@ namespace VNmanager
                     Mvvm.ChangeColor.Execute(Mvvm.gameOnDisplay);
 
                     if (Mvvm.gameOnDisplay != "Collection")
-                        Mvvm.SetProfileData();
+                        Mvvm.SetProfileData(null);
 
                     if (Mvvm.gameOnDisplay == "Collection")
                         Mvvm.CurrentPageViewModel = PageViewModels[0];
@@ -166,7 +167,7 @@ namespace VNmanager
             else
             {
                 Mvvm.gameOnDisplay = target;
-                Mvvm.SetProfileData();
+                Mvvm.SetProfileData(null);
                 AddPageHistory(target);
 
                 if (Mvvm.CurrentPageViewModel == PageViewModels[0] || Mvvm.CurrentPageViewModel == PageViewModels[1])
@@ -179,16 +180,21 @@ namespace VNmanager
             var f = ValidateHistory("forward");
         }
 
+        /// <summary>
+        /// Adding page to history to use arrows
+        /// </summary>
+        /// <param name="title"></param>
         public void AddPageHistory(string title)
         {
             PageHistoryIndex++;
             PageHistory.Add(title);
-            ShowHistory();
         }
-        public void BackPageHistory()
-        {
-            PageHistoryIndex--;
-        }
+
+        /// <summary>
+        /// Checking if changing is possible
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
         private bool ValidateHistory(string p)
         {
             if (p == "back")
@@ -223,17 +229,28 @@ namespace VNmanager
 
         }
 
+        /// <summary>
+        /// Going back in history
+        /// </summary>
+        /// <param name="o"></param>
         public void Back(object o)
         {
             Change("_back_");
         }
 
+        /// <summary>
+        /// Going forward in history
+        /// </summary>
+        /// <param name="o"></param>
         public void Forward(object o)
         {
             Change("_forward_");
 
         }
 
+        /// <summary>
+        /// Showing history
+        /// </summary>
         private void ShowHistory()
         {
             foreach (var ph in PageHistory)
@@ -246,6 +263,11 @@ namespace VNmanager
 
         #region Helpers
 
+        /// <summary>
+        /// Checking if game is in collection
+        /// </summary>
+        /// <param name="gameTitle"></param>
+        /// <returns></returns>
         private bool isGameInCollection(string gameTitle)
         {
             var check = SqliteDataAccess.LoadOneGame(gameTitle);

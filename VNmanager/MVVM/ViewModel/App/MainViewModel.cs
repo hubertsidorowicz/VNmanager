@@ -29,9 +29,19 @@ namespace VNmanager
     {
 
         #region Private Members
+        /// <summary>
+        /// Instance for main window
+        /// </summary>
         private Window mainWindow { get; set; } = Application.Current.MainWindow;
 
+        /// <summary>
+        /// Stores the source for background image
+        /// </summary>
         public ImageSource imageSource { get; set; }
+
+        /// <summary>
+        /// List of background names
+        /// </summary>
         string[] BackgroundNames =
         {
             "AnimeRoom.jpg",
@@ -41,6 +51,9 @@ namespace VNmanager
             "TaishoDistrict.jpg",
         };
 
+        /// <summary>
+        /// List of shortened month names for converting dates
+        /// </summary>
         string[] MonthNames =
         {
             "---",
@@ -58,38 +71,54 @@ namespace VNmanager
             "Dec",
         };
 
+        /// <summary>
+        /// Stores all added games
+        /// </summary>
         private List<GamesModel> _gamesList;
 
-
+        /// <summary>
+        /// Elements of the UI for bindin
+        /// </summary>
         private object _sideView;
         private object _menuBarView;
-        private object _addGameMenu;
+
+        /// <summary>
+        /// Properties of added game
+        /// </summary>
         private string _gameTitle;
         private string _titleUrl;
         private string _pageUrl;
         private string _lastPlayed;
         private string _lastPlayDisplay;
-
         private double _xT;
         private double _yT;
         private double _widthT;
         private double _heightT;
-
         private double _xP;
         private double _yP;
         private double _widthP;
         private double _heightP;
 
+        /// <summary>
+        /// Coordinates of images in TuneGame
+        /// </summary>
         private double _x1;
         private double _y1;
-
         private double _width1;
         private double _height1;
-
         private double _x2;
         private double _y2;
         private double _width2;
         private double _height2;
+
+        /// <summary>
+        /// Path to image to arrow back it changes based on accesibility
+        /// </summary>
+        private string _backImage;
+        /// <summary>
+        /// Path to image to arrow forward it changes based on accesibility
+        /// </summary>
+        private string _forwardImage;
 
         /// <summary>
         /// Varirable of the view Model binded to Main Window
@@ -100,6 +129,9 @@ namespace VNmanager
 
         #region Public Members
 
+        /// <summary>
+        /// Game currently displayed
+        /// </summary>
         public string gameOnDisplay = "";
 
         /// <summary>
@@ -118,8 +150,14 @@ namespace VNmanager
             }
         }
 
+        /// <summary>
+        /// Side Panel View Model
+        /// </summary>
         public SidePanelViewModel SidePanelVM { get; set; }
 
+        /// <summary>
+        /// Binding for SideView
+        /// </summary>
         public object SideView
         {
             get { return _sideView; }
@@ -129,8 +167,14 @@ namespace VNmanager
             }
         }
 
+        /// <summary>
+        /// Menu Bar View Model
+        /// </summary>
         public MenuBarViewModel MenuBarVM { get; set; }
 
+        /// <summary>
+        /// Binding for Menu Bar
+        /// </summary>
         public object MenuBarView
         {
             get { return _menuBarView; }
@@ -140,24 +184,13 @@ namespace VNmanager
             }
         }
 
-        public AddWindowViewModel AddWindowVM { get; set; }
-
-        public object AddGameMenu
-        {
-            get { return _addGameMenu; }
-            set
-            {
-                _addGameMenu = value;
-            }
-        }
-
         /// <summary>
         /// history of enlighten grids
         /// </summary>
         public Dictionary<string, Grid> grids { get; set; } = new Dictionary<string, Grid>();
         
         /// <summary>
-        /// whatever this is
+        /// Grid at the begginning 
         /// </summary>
         public Grid allgrid { get; set; }
 
@@ -169,8 +202,6 @@ namespace VNmanager
         /// <summary>
         /// Path to image to arrow back it changes based on accesibility
         /// </summary>
-        private string _backImage;
-
         public string backImage
         {
             get
@@ -187,7 +218,6 @@ namespace VNmanager
         /// <summary>
         /// Path to image to arrow forward it changes based on accesibility
         /// </summary>
-        private string _forwardImage;
         public string forwardImage
         {
             get
@@ -332,51 +362,110 @@ namespace VNmanager
         #endregion
 
         #region Public Commands
-        public RelayCommand OpenAddWindow { get; set; }
-        public RelayCommand SetUpProfile { get; set; }
-        public RelayCommand CloseApplication { get; set; }
-        public RelayCommand MinimizeMainWindow { get; set; }
+
+        /// <summary>
+        /// Opens window to adding games
+        /// </summary>
+        public RelayCommand OpenAddWindow { get { return new RelayCommand(OpenAWindow); } }
+
+        /// <summary>
+        /// Get from database all records you need to display game
+        /// </summary>
+        public RelayCommand SetUpProfile { get { return new RelayCommand(SetProfileData); } }
+
+        /// <summary>
+        /// Closing app
+        /// </summary>
+        public RelayCommand CloseApplication { get { return new RelayCommand(Close); } }
+
+        /// <summary>
+        /// Minimizing main window
+        /// </summary>
+        public RelayCommand MinimizeMainWindow { get { return new RelayCommand(Minimize); } }
+
+        /// <summary>
+        /// Move back to previous page
+        /// </summary>
         public RelayCommand MoveBack { get { return new RelayCommand(App.Nvm.Back); } }
-        public RelayCommand MoveForward { get { return new RelayCommand(App.Nvm.Forward); } }
-        public RelayCommand MakeGameShortcut { get { return new RelayCommand(MakeShortcut); } }
-        public RelayCommand ViewGameFiles { get { return new RelayCommand(ViewFiles); } }
-        public RelayCommand DefaultSettings { get { return new RelayCommand(DefTune); } }
-        public RelayCommand EnableCombobox { get { return new RelayCommand(Enable); } }
         
-        private void Enable(object o)
-        {
-            Console.WriteLine(o.ToString());
-        }
+        /// <summary>
+        /// Move forward to next page
+        /// </summary>
+        public RelayCommand MoveForward { get { return new RelayCommand(App.Nvm.Forward); } }
+        
+        /// <summary>
+        /// Making game shortcut
+        /// </summary>
+        public RelayCommand MakeGameShortcut { get { return new RelayCommand(MakeShortcut); } }
+        
+        /// <summary>
+        /// Opening game files
+        /// </summary>
+        public RelayCommand ViewGameFiles { get { return new RelayCommand(ViewFiles); } }
+        
+        /// <summary>
+        /// Opening tune mode
+        /// </summary>
+        public RelayCommand DefaultSettings { get { return new RelayCommand(DefTune); } }
 
-        private void SaveTune(object s)
-        {
-            //DataBase Operation
-        }
-        private void DefTune(object s)
-        {
-            X1 = 0;
-            Y1 = 0;
-
-            Width1 = 1.0;
-            Height1 = 1.0;
-
-            X2 = 0;
-            Y2 = 0;
-
-            Width2 = 1.0;
-            Height2 = 1.0;
-        }
+        /// <summary>
+        /// Changing title width in tune mode
+        /// </summary>
         public RelayCommand<string> ChangeTitleWidth { get { return new RelayCommand<string>(TitleWidth); } }
+
+        /// <summary>
+        /// Changing title height in tune mode
+        /// </summary>
         public RelayCommand<string> ChangeTitleHeight { get { return new RelayCommand<string>(TitleHeight); } }
+
+        /// <summary>
+        /// Changing page width in tune mode
+        /// </summary>
         public RelayCommand<string> ChangePageWidth { get { return new RelayCommand<string>(PageWidth); } }
+
+        /// <summary>
+        /// Changing page height in tune mode
+        /// </summary>
         public RelayCommand<string> ChangePageHeight { get { return new RelayCommand<string>(PageHeight); } }
+        
+        /// <summary>
+        /// Changing properties of the game in database
+        /// </summary>
         public RelayCommand<string> ChangeGameData { get { return new RelayCommand<string>(ChangeGame); } }
+       
+        /// <summary>
+        /// Removing images from game profile
+        /// </summary>
         public RelayCommand<string> DeleteGameImages { get { return new RelayCommand<string>(DeleteImage); } }
+        
+        /// <summary>
+        /// Changing game title
+        /// </summary>
         public RelayCommand<string> ChangeGameTitle { get { return new RelayCommand<string>(ChangeTitle); } }
+        
+        /// <summary>
+        /// Delete game data from database
+        /// </summary>
         public RelayCommand<string> DeleteGameData { get { return new RelayCommand<string>(DeleteGame); } }
+        
+        /// <summary>
+        /// Change game sorting/arrengament
+        /// </summary>
         public RelayCommand<string> ChangeGamesSorting { get { return new RelayCommand<string>(ChangeSorting); } }
+        
+        /// <summary>
+        /// turn on the game
+        /// </summary>
         public RelayCommand<string> PlayGame { get { return new RelayCommand<string>(ActivateGame); } }
+        
+        /// <summary>
+        /// Add new game
+        /// </summary>
         public RelayCommand<string> AddGameCommand { get { return new RelayCommand<string>(AddNewGame); } }
+        
+        /// <summary>
+        /// Change color of tiles
+        /// </summary>
         public RelayCommand<string> ChangeColor { get { return new RelayCommand<string>(Col); } }
 
         #endregion
@@ -384,10 +473,10 @@ namespace VNmanager
         #region Variables
 
         #region Game Profile Data
-        /// <summary>
-        /// Game Profile Data
-        /// </summary>
 
+        /// <summary>
+        /// Stores all added games
+        /// </summary>
         public List<GamesModel> gamesList
         {
             get
@@ -401,6 +490,9 @@ namespace VNmanager
             }
         }
 
+        /// <summary>
+        /// Title of the game
+        /// </summary>
         public string gameTitle 
         {
             get { return _gameTitle; }
@@ -411,8 +503,14 @@ namespace VNmanager
             } 
         }
 
+        /// <summary>
+        /// Path to game exe
+        /// </summary>
         public string gameUrl { get; set; }
 
+        /// <summary>
+        /// Path to title image
+        /// </summary>
         public string TitleUrl
         {
             get
@@ -425,7 +523,10 @@ namespace VNmanager
                 OnPropertyChanged("TitleUrl");
             } 
         }
-
+        
+        /// <summary>
+        /// Path to page image
+        /// </summary>
         public string PageUrl 
         {
             get
@@ -439,8 +540,14 @@ namespace VNmanager
             }
         }
 
+        /// <summary>
+        /// Date of adding the game
+        /// </summary>
         public string TimePlayed { get; set; }
 
+        /// <summary>
+        /// Last played date
+        /// </summary>
         public string LastPlayed
         {
             get
@@ -454,6 +561,9 @@ namespace VNmanager
             }
         }
 
+        /// <summary>
+        /// Converted last played date
+        /// </summary>
         public string LastPlayDisplay
         {
             get
@@ -467,6 +577,9 @@ namespace VNmanager
             }
         }
         
+        /// <summary>
+        /// Coordinates for title
+        /// </summary>
         public double XT
         {
             get
@@ -480,6 +593,9 @@ namespace VNmanager
             }
         }
 
+        /// <summary>
+        /// Coordinates for title
+        /// </summary>
         public double YT
         {
             get
@@ -493,6 +609,9 @@ namespace VNmanager
             }
         }
 
+        /// <summary>
+        /// Title width
+        /// </summary>
         public double WidthT
         {
             get
@@ -506,6 +625,9 @@ namespace VNmanager
             }
         }
 
+        /// <summary>
+        /// Title height
+        /// </summary>
         public double HeightT
         {
             get
@@ -519,6 +641,9 @@ namespace VNmanager
             }
         }
 
+        /// <summary>
+        /// Coordinates for page
+        /// </summary>
         public double XP
         {
             get
@@ -532,6 +657,9 @@ namespace VNmanager
             }
         }
 
+        /// <summary>
+        /// Coordinates for page
+        /// </summary>
         public double YP
         {
             get
@@ -545,6 +673,9 @@ namespace VNmanager
             }
         }
 
+        /// <summary>
+        /// Page width
+        /// </summary>
         public double WidthP
         {
             get
@@ -558,6 +689,9 @@ namespace VNmanager
             }
         }
 
+        /// <summary>
+        /// Page height
+        /// </summary>
         public double HeightP
         {
             get
@@ -578,9 +712,6 @@ namespace VNmanager
         #region Contstructor
         public MainViewModel()
         {
-
-            #region Initial Settings
-
             #region Window/UserControl variables
 
             ///<summary>
@@ -604,9 +735,11 @@ namespace VNmanager
             ///Drawing Background for game collection and setting imageSource
             /// </summary>
 
+            // instance for random
             Random rnd = new Random();
+            // random number
             int imgNum = rnd.Next(0, 4);
-
+            //setting image source for random picture
             imageSource = new BitmapImage(new Uri($"C:/Users/huber/source/repos/VNmanager/VNmanager/Images/Backgrounds/{BackgroundNames[imgNum]}", UriKind.Relative));
 
             #endregion
@@ -637,40 +770,6 @@ namespace VNmanager
             HeightP = 1;
 
             #endregion
-
-            #endregion
-
-            #region Relay Commands
-            ///<summary>
-            ///Changing current view to Game Collection
-            /// </summary>
-
-            CloseApplication = new RelayCommand(o =>
-            {
-                // I will find all open windows and then close them
-                // for now only main one
-                mainWindow.Close();
-            });
-
-            OpenAddWindow = new RelayCommand(o =>
-            {
-                var addMenu = new AddWindow();
-                addMenu.ShowDialog();
-            }); 
-
-            MinimizeMainWindow = new RelayCommand(o =>
-            {
-                mainWindow.WindowState = WindowState.Minimized;
-            });
-
-            SetUpProfile = new RelayCommand(o =>
-            {
-                if(gameOnDisplay != "Collection")
-                    SetProfileData();
-            });
-
-            #endregion
-
         }
         
         #endregion
@@ -938,6 +1037,20 @@ namespace VNmanager
 
         #region Helpers
 
+        private void OpenAWindow(object o)
+        {
+            var addMenu = new AddWindow();
+            addMenu.ShowDialog();
+        }
+        private void Close(object o)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
+        private void Minimize(object o)
+        {
+            mainWindow.WindowState = WindowState.Minimized;
+        }
+
         private string ConvertDate(string date, string sign)
         {
             if (date == null || date == "")
@@ -973,8 +1086,11 @@ namespace VNmanager
 
             return true;
         }
-        public void SetProfileData()
+        public void SetProfileData(object o)
         {
+            if (gameOnDisplay == "Collection")
+                return;
+
             var list = SqliteDataAccess.LoadOneGame(gameOnDisplay);
 
             gameTitle = list[0].Title;
@@ -1051,7 +1167,20 @@ namespace VNmanager
                 Height2 += 0.1;
             }
         }
+        private void DefTune(object s)
+        {
+            X1 = 0;
+            Y1 = 0;
 
+            Width1 = 1.0;
+            Height1 = 1.0;
+
+            X2 = 0;
+            Y2 = 0;
+
+            Width2 = 1.0;
+            Height2 = 1.0;
+        }
         #region Icon Functions
 
         /// <summary>

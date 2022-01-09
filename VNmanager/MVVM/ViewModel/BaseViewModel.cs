@@ -14,7 +14,7 @@ namespace VNmanager
 
         protected void OnPropertyChanged(string propertyName)
         {
-           // VerifyPropertyName(propertyName);
+            VerifyPropertyName(propertyName);
             if(PropertyChanged != null)
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
