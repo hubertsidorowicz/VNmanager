@@ -874,7 +874,6 @@ namespace VNmanager
         {
             if (!CheckGame(pickedGame)) return;
             
-            App.AddWindow.Close();
 
             GamesModel gm = new GamesModel();
             gm.Id = 0;
@@ -1083,6 +1082,9 @@ namespace VNmanager
                 popup.ShowDialog();
                 return false;
             }
+
+            if (App.Nvm.isGameInCollection(title) == true)
+                return false;
 
             return true;
         }

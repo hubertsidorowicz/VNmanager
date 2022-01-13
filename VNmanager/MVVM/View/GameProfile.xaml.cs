@@ -46,5 +46,41 @@ namespace VNmanager
             //    ImageOpt.IsEnabled = false;
             //}
         }
+
+        private void Grid_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Grid grid = sender as Grid;
+
+            var bc = new BrushConverter();
+            grid.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#2a283b");
+            grid.Background.Opacity = 0.5;
+        }
+
+        private void Grid_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Grid grid = sender as Grid;
+
+            var bc = new BrushConverter();
+            grid.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#272537");
+            grid.Background.Opacity = 0.5;
+        }
+
+        private void Stack_MouseEnter(object sender, MouseEventArgs e)
+        {
+            StackPanel stackpanel = sender as StackPanel;
+
+            var bc = new BrushConverter();
+            stackpanel.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#2a283b");
+            stackpanel.Background.Opacity = 0.5;
+        }
+
+        private void Stack_MouseLeave(object sender, MouseEventArgs e)
+        {
+            StackPanel stackpanel = sender as StackPanel;
+
+            var bc = new BrushConverter();
+            stackpanel.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#272537");
+            stackpanel.Background.Opacity = 0.5;
+        }
     }
 }

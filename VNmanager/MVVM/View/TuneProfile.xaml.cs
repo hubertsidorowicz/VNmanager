@@ -37,11 +37,6 @@ namespace VNmanager
             App.Mvvm.Width2 = App.Mvvm.WidthP;
             App.Mvvm.Height2 = App.Mvvm.HeightP;
 
-            Console.WriteLine(App.Mvvm.XP);
-            Console.WriteLine(App.Mvvm.YP);
-            Console.WriteLine(App.Mvvm.WidthP);
-            Console.WriteLine(App.Mvvm.HeightP);
-
             //Title image
             Canvas canvas = new Canvas();
             canvas = Picture;
@@ -78,9 +73,6 @@ namespace VNmanager
                 return;
             var position = e.GetPosition(sender as IInputElement);
 
-            Console.WriteLine("X: "+ (position.X - this.offset.X));
-            Console.WriteLine("Y: "+ (position.Y - this.offset.Y));
-
             App.Mvvm.X1 = (position.X - this.offset.X);
             App.Mvvm.Y1 = (position.Y - this.offset.Y);
         }
@@ -112,9 +104,6 @@ namespace VNmanager
             if (this.dragObject2 == null)
                 return;
             var position = e.GetPosition(sender as IInputElement);
-
-            Console.WriteLine("X: " + (position.X - this.offset2.X));
-            Console.WriteLine("Y: " + (position.Y - this.offset2.Y));
 
             App.Mvvm.X2 = (position.X - this.offset2.X);
             App.Mvvm.Y2 = (position.Y - this.offset2.Y);

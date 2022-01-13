@@ -28,7 +28,10 @@
 
                 <Grid Grid.Row="0"
                       Width="300"
-                      Height="450">
+                      Height="450"
+                      MouseEnter="Grid_MouseEnter"
+                      MouseLeave="Grid_MouseLeave"
+                      ToolTip="Right click to view options">
 
                     <Grid.Background>
                         <SolidColorBrush Color="#272537" Opacity="0.5"/>
@@ -119,7 +122,10 @@
                     <!-- Page Image Panel -->
                     <StackPanel Width="675"
                                 Height="225"
-                                Orientation="Horizontal">
+                                Orientation="Horizontal"
+                                MouseEnter="Stack_MouseEnter"
+                                MouseLeave="Stack_MouseLeave"
+                                ToolTip="Right click to view options">
 
                         <StackPanel.ContextMenu>
                             <ContextMenu>
@@ -160,7 +166,6 @@
                                 <TextBlock.Background>
                                     <SolidColorBrush Color="#272537" Opacity="0.6"/>
                                 </TextBlock.Background>
-                                
                             </TextBlock>
 
                         </Canvas>
@@ -194,6 +199,7 @@
                         <!-- Uninstall -->
                         <Button Style="{StaticResource UninstallButton}"
                                 Command="{Binding DeleteGameData}"
+                                CommandParameter="{Binding gameTitle}"
                                 Height="80"
                                 Width="150"/>
 
@@ -205,11 +211,6 @@
                                 Margin="10,0,10,0"/>
 
 
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal"
-                                Height="100"
-                                Margin="0,20,0,0">
                     </StackPanel>
 
                 </StackPanel>

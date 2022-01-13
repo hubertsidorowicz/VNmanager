@@ -70,6 +70,15 @@ namespace VNmanager
             if(e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                Console.WriteLine(files[0]);
+
+                MainViewModel mvvm = App.Mvvm;
+
+                mvvm.title = GetGameTitle(files[0]);
+                mvvm.gameUrl = files[0];
+
+                mvvm.AddGameCommand.Execute(files[0]);
+
             }
         }
     }

@@ -106,7 +106,6 @@ namespace VNmanager
         /// <param name="target"></param>
         public void Change(string target)
         {
-            Console.WriteLine(target);
 
             if(target == "Collection")
             {
@@ -115,7 +114,6 @@ namespace VNmanager
             }
             else if(target == "_back_")
             {
-                Console.WriteLine("Going Back");
                 if (ValidateHistory("back") == true)
                 {
                     Mvvm.gameOnDisplay = PageHistory[PageHistoryIndex - 1];
@@ -159,7 +157,6 @@ namespace VNmanager
             }
             else if (target == "TuneProfile")
             {
-                Console.WriteLine("Tune Profile !!!!!!!!!!!!!!!!!! ");
                 AddPageHistory("TuneProfile");
 
                 Mvvm.CurrentPageViewModel = PageViewModels[3];
@@ -268,7 +265,7 @@ namespace VNmanager
         /// </summary>
         /// <param name="gameTitle"></param>
         /// <returns></returns>
-        private bool isGameInCollection(string gameTitle)
+        public bool isGameInCollection(string gameTitle)
         {
             var check = SqliteDataAccess.LoadOneGame(gameTitle);
 

@@ -19,7 +19,7 @@
                    FontSize="15"
                    Style="{StaticResource GameTitleText}"/>
         
-        <TextBlock Text="The dropped file is invalid. Drop correct file!"
+        <TextBlock Text="The file is invalid. Drop correct file!"
                    Margin="5,30,0,0"
                    FontSize="10"
                    Style="{StaticResource GameTitleText}"/>

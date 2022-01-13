@@ -144,8 +144,8 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="1"
-                      Height="200"
-                      Width="600">
+                      Height="225"
+                      Width="675">
                     
                     <Grid.Background>
                         <SolidColorBrush Color="#af9aff" Opacity="0.8"/>
@@ -153,8 +153,8 @@
                     
                     <Canvas x:Name="Picture2"
                             Grid.Column="1"
-                            Width="600"
-                            Height="200"
+                            Width="675"
+                            Height="225"
                             PreviewMouseUp="Picture_PreviewMouseUp2"
                             PreviewMouseMove="Picture_PreviewMouseMove2">
 

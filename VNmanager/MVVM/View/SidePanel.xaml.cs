@@ -61,8 +61,6 @@ namespace VNmanager
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var l = (string)((ComboBoxItem)((ComboBox)sender).SelectedValue).Tag;
-            Console.WriteLine("Selected Value");
-            Console.WriteLine(l);
             App.Mvvm.ChangeGamesSorting.Execute(l);
         }
         private void ColorTile_Loaded(object sender, RoutedEventArgs e)
