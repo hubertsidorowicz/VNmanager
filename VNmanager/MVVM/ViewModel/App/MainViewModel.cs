@@ -961,7 +961,7 @@ namespace VNmanager
             else if(itemToEdit == "Sizes")
             {
                 game[0].XT = X1;
-                game[0].YT = X1;
+                game[0].YT = Y1;
                 game[0].WidthT = Width1;
                 game[0].HeightT = Height1;
 

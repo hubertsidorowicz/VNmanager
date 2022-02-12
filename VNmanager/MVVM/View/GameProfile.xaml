@@ -49,10 +49,10 @@
                             Height="450">
 
                         <Canvas.Background>
-                            <ImageBrush Stretch="None" ImageSource="{Binding TitleUrl}">
+                            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding TitleUrl}">
                                 <ImageBrush.Transform>
                                     <TransformGroup>
-                                        <TranslateTransform X="{Binding XT}" Y="{Binding XT}"/>
+                                        <TranslateTransform X="{Binding XT}" Y="{Binding YT}"/>
                                         <ScaleTransform ScaleX="{Binding WidthT}" ScaleY="{Binding HeightT}"/>
                                     </TransformGroup>
                                 </ImageBrush.Transform>
